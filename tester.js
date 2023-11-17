@@ -1,6 +1,6 @@
 let A = [];
 let B = [];
-let count = 0;
+let operations = [];
 
 function sa()
 {
@@ -8,7 +8,7 @@ function sa()
 	const tmp = A[0];
 	A[0] = A[1];
 	A[1] = tmp;
-	count++;
+	operations.push("sa");
 }
 
 function sb()
@@ -17,14 +17,14 @@ function sb()
 	const tmp = B[0];
 	B[0] = B[1];
 	B[1] = tmp;
-	count++;
+	operations.push("sb");
 }
 
 function ss()
 {
 	sa();
 	sb();
-	count++;
+	operations.push("ss");
 }
 
 function pa()
@@ -32,7 +32,7 @@ function pa()
 	const tmp = B[0];
 	B.shift();
 	A.unshift(tmp);
-	count++;
+	operations.push("pa");
 }
 
 function pb()
@@ -40,7 +40,7 @@ function pb()
 	const tmp = A[0];
 	A.shift();
 	B.unshift(tmp);
-	count++;
+	operations.push("pb");
 }
 
 function ra()
@@ -48,7 +48,7 @@ function ra()
 	const tmp = A[0];
 	A.shift();
 	A.push(tmp);
-	count++;
+	operations.push("ra");
 }
 
 function rb()
@@ -56,14 +56,16 @@ function rb()
 	const tmp = B[0];
 	B.shift();
 	B.push(tmp);
-	count++;
+	operations.push("rb");
 }
 
 function rr()
 {
 	ra();
 	rb();
-	count++;
+	operations.pop();
+	operations.pop();
+	operations.push("rr");
 }
 
 function rra()
@@ -71,7 +73,7 @@ function rra()
 	const tmp = A[A.length - 1];
 	A.pop();
 	A.unshift(tmp);
-	count++;
+	operations.push("rra");
 }
 
 function rrb()
@@ -79,14 +81,17 @@ function rrb()
 	const tmp = B[B.length - 1];
 	B.pop();
 	B.unshift(tmp);
-	count++;
+	operations.push("rrb");
 }
 
 function rrr()
 {
 	rra();
 	rrb();
-	count++;
+	// remove last operation
+	operations.pop();
+	operations.pop();
+	operations.push("rrr");
 }
 
 function isSorted()
@@ -102,7 +107,7 @@ function print()
 	console.log("A: " + A);
 	console.log("B: " + B);
 	console.log("Sorted: " + isSorted());
-	console.log("Count: " + count);
+	console.log("Count: " + operations.length);
 }
 
 function solveFor3()
@@ -183,95 +188,152 @@ function solveFor5()
 			rra()
 }
 
-function place(n)
+function countMoves(n)
 {
-	let rot = 0;
-	while (B[rot] != n) rot++;
-	let revRot = 0;
-	while (B[(B.length - revRot) % B.length] != n) revRot++;
-	if (rot < revRot)
-		for (let i = 0; i < rot; i++)
-			rb();
+	let target = Math.max(...B);
+	if (n > Math.min(...B) && n < Math.max(...B)) {
+		target = Math.min(...B);
+		for (let i = 0; i < B.length; i++)
+		{
+			if (B[i] < n && B[i] > target)
+				target = B[i];
+		}
+	}
+
+	let rotB = 0;
+	while (B[rotB] != target) rotB++;
+	let revRotB = 0;
+	while (B[Math.abs((B.length - revRotB) % B.length)] != target) revRotB++;
+
+	let rotA = 0;
+	while (A[rotA] != n) rotA++;
+	let revRotA = 0;
+	while (A[Math.abs((A.length - revRotA) % A.length)] != n) revRotA++;
+
+	//console.log("n: ", n, "rotB: ", rotB, "revRotB: ", revRotB, "rotA: ", rotA, "revRotA: ", revRotA, target);
+	let res = Math.min((rotB + revRotA), (revRotB + rotA), Math.max(rotB, rotA), Math.max(revRotB, revRotA));
+	if (res == rotB + revRotA)
+		return {rb: rotB, rra: revRotA, ra: 0, rrb: 0, rr: 0, rrr: 0};
+	else if (res == revRotB + rotA)
+		return {rrb: revRotB, ra: rotA, rb: 0, rra: 0, rr: 0, rrr: 0};
+	else if (res == Math.max(rotB, rotA))
+	{
+		let min = Math.min(rotB, rotA);
+		if (rotB < rotA)
+			return {rb: 0, ra: rotA - min, rra: 0, rrb: 0, rr: min, rrr: 0};
+		else
+			return {rb: rotB - min, ra: 0, rra: 0, rrb: 0, rr: min, rrr: 0};
+	}
+	else if (res == Math.max(revRotB, revRotA))
+	{
+		let min = Math.min(revRotB, revRotA);
+		if (revRotB < revRotA)
+			return {rrb: 0, rra: revRotA - min, rb: 0, ra: 0, rr: 0, rrr: min};
+		else
+			return {rrb: revRotB - min, rra: 0, rb: 0, ra: 0, rr: 0, rrr: min};
+	}
 	else
-		for (let i = 0; i < revRot; i++)
-			rrb();
-	// console.log(n, rot, revRot);
-	pa();
-	// print();
+		return null;
 }
 
 function solveForLots()
 {
-	const chunks = A.length <= 100 ? 5 : 11;
-	const interval = Math.max(...A) - Math.min(...A);
-	const chunkInterval = Math.ceil(interval / chunks);
-	const start = Math.min(...A);
+	// First we push the 2 firsts el from A to B
+	pb(); pb();
 
-	for (let c = 0; c < chunks; c++)
+	while (A.length > 0)
 	{
-		const min = start + chunkInterval * c;
-		const max = min + chunkInterval;
-		// console.log(min, max);
-		while (A.filter(n => n >= min && n <= max).length > 0)
+		let moves = {};
+		for (let i = 0; i < A.length; i++)
+			moves[A[i]] = countMoves(A[i]);
+		//console.log(moves);
+		let min = Infinity;
+		let key;
+		for (let i = 0; i < A.length; i++)
 		{
-			let i = 0;
-			while (A[i] < min || A[i] > max)
-				i++;
-			if (i == A.length)
-				break;
-			let rot = 0;
-			while (A[rot] != A[i]) rot++;
-			let revRot = 0;
-			while (A[(A.length - revRot - 1) % A.length] != A[i]) revRot++;
-			if (rot < revRot)
-				for (let j = 0; j < rot; j++)
-					ra();
-			else
-				for (let j = 0; j < revRot; j++)
-					rra();
-			pb();
+			let m = moves[A[i]];
+			let sum = m.rb + m.ra + m.rr + m.rra + m.rrb + m.rrr;
+			if (sum < min)
+			{
+				min = sum;
+				key = A[i];
+			}
 		}
-		// print();
+		//console.log("Key: ", key);
+		let m = moves[key];
+		for (let i = 0; i < m.rb; i++)
+			rb();
+		for (let i = 0; i < m.ra; i++)
+			ra();
+		for (let i = 0; i < m.rr; i++)
+			rr();
+		for (let i = 0; i < m.rra; i++)
+			rra();
+		for (let i = 0; i < m.rrb; i++)
+			rrb();
+		for (let i = 0; i < m.rrr; i++)
+			rrr();
+		pb();
+		//print();
 	}
 	while (B.length > 0)
-	{
-		place(Math.max(...B));
-	}
-	// print();
+		pa();
+	//print();
+	let rotations = 0;
+	while (A[rotations] != Math.min(...A)) rotations++;
+	let reverseRotations = 0;
+	while (A[(A.length - reverseRotations) % A.length] != Math.min(...A)) reverseRotations++;
+	//console.log(rotations, reverseRotations);
+	if (rotations < reverseRotations)
+		for (let i = 0; i < rotations; i++)
+			ra();
+	else
+		for (let i = 0; i < reverseRotations; i++)
+			rra()
+	//print();
 }
 
-function tester()
+function tester(n, tests)
 {
-	const tests = 1000;
-	const n = 100;
 	const results = [];
-	const max = 10000;
+	const max = 100000;
 
-	console.time("Tester");
 	for (let t = 0; t < tests; t++)
 	{
 		A = [];
 		B = [];
-		count = 0;
+		operations = [];
 		while (A.length < n)
 		{
 			A.push(Math.floor(Math.random() * max * 2) - max);
 			// Remove duplicates
 			A = [...new Set(A)];
 		}
-		console.log("Test " + (t + 1), A);
-		solveForLots();
+		if (n == 3)
+			solveFor3();
+		else if (n == 5)
+			solveFor5();
+		else
+			solveForLots();
+		//print();
 		if (!isSorted())
 		{
-			print();
-			throw new Error("Error", t+1, A);
+			console.log( t+1, A, operations);
+			throw new Error("Error");
 		}
-		results.push(count);
+		results.push(operations.length);
+
+		if (t%10 == 0) console.log(n, "Test " + (t) + " / " + tests, "Min: ", Math.min(...results), "Max: ", Math.max(...results), "Avg: ", results.reduce((a, b) => a + b) / results.length);
 	}
-	console.timeEnd("Tester");
-	console.log("Average: ", results.reduce((a, b) => a + b) / results.length);
-	console.log("Min: ", Math.min(...results));
-	console.log("Max: ", Math.max(...results));
+	return results;
 }
 
-tester();
+let three = tester(3, 1000);
+let five = tester(5, 1000);
+let hundred = tester(100, 1000);
+let five_hundred = tester(500, 500);
+
+console.log("===== 3 (min: " + Math.min(...three) + ", max: " + Math.max(...three) + ", avg: " + three.reduce((a, b) => a + b) / three.length + ", objective: " + three.filter(t => t <= 5).length + ")=====");
+console.log("===== 5 (min: " + Math.min(...five) + ", max: " + Math.max(...five) + ", avg: " + five.reduce((a, b) => a + b) / five.length + ", objective: " + five.filter(t => t <= 12).length + ")=====");
+console.log("===== 100 (min: " + Math.min(...hundred) + ", max: " + Math.max(...hundred) + ", avg: " + hundred.reduce((a, b) => a + b) / hundred.length + ", objective: " + hundred.filter(t => t <= 700).length + ")=====");
+console.log("===== 500 (min: " + Math.min(...five_hundred) + ", max: " + Math.max(...five_hundred) + ", avg: " + five_hundred.reduce((a, b) => a + b) / five_hundred.length + ", objective: " + five_hundred.filter(t => t <= 5500).length + ")=====");

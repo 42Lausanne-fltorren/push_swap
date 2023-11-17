@@ -1,0 +1,4 @@
+If n < min(B)
+	we push when B[0] == max(B)
+else
+	we push when B[0] == closestUnder(B)
