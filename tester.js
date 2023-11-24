@@ -328,12 +328,19 @@ function tester(n, tests)
 	return results;
 }
 
-let three = tester(3, 1000);
-let five = tester(5, 1000);
-let hundred = tester(100, 1000);
-let five_hundred = tester(500, 500);
+// let three = tester(3, 1000);
+// let five = tester(5, 1000);
+//let hundred = tester(100, 1000);
+//let five_hundred = tester(500, 500);
 
-console.log("===== 3 (min: " + Math.min(...three) + ", max: " + Math.max(...three) + ", avg: " + three.reduce((a, b) => a + b) / three.length + ", objective: " + three.filter(t => t <= 5).length + ")=====");
+/*console.log("===== 3 (min: " + Math.min(...three) + ", max: " + Math.max(...three) + ", avg: " + three.reduce((a, b) => a + b) / three.length + ", objective: " + three.filter(t => t <= 5).length + ")=====");
 console.log("===== 5 (min: " + Math.min(...five) + ", max: " + Math.max(...five) + ", avg: " + five.reduce((a, b) => a + b) / five.length + ", objective: " + five.filter(t => t <= 12).length + ")=====");
 console.log("===== 100 (min: " + Math.min(...hundred) + ", max: " + Math.max(...hundred) + ", avg: " + hundred.reduce((a, b) => a + b) / hundred.length + ", objective: " + hundred.filter(t => t <= 700).length + ")=====");
-console.log("===== 500 (min: " + Math.min(...five_hundred) + ", max: " + Math.max(...five_hundred) + ", avg: " + five_hundred.reduce((a, b) => a + b) / five_hundred.length + ", objective: " + five_hundred.filter(t => t <= 5500).length + ")=====");
+console.log("===== 500 (min: " + Math.min(...five_hundred) + ", max: " + Math.max(...five_hundred) + ", avg: " + five_hundred.reduce((a, b) => a + b) / five_hundred.length + ", objective: " + five_hundred.filter(t => t <= 5500).length + ")=====");*/
+
+A = [2907, 9328, 2936, 5584, 3375, 8086, 5486, 6982, 6197, 4714, 2442, 9550, 5278, 6085, 9524, 6929, 2497, 5422, 459, 1135, 9636, 8598, 5772, 3677, 5020, 1964, 8023, 5243, 3764, 2983, 592, 2056, 5913, 5311, 5968, 6582, 5583, 2378, 3440, 1245, 4338, 4087, 525, 5903, 1752, 1881, 5597, 5285, 9253, 7447, 2329, 5049, 7098, 2154, 5911, 8433, 3182, 3467, 2804, 9906, 3941, 1019, 6520, 3419, 7808, 6056, 6457, 5497, 3747, 730, 2093, 8399, 4108, 9507, 5365, 3065, 4158, 8775, 9280, 8076, 3717, 2595, 4985, 8079, 1534, 3604, 1510, 398, 965, 3059, 689, 2911, 5987, 614, 6977, 7532, 7404, 7, 7620, 4427];
+B = [];
+operations = [];
+solveForLots();
+const fs = require("fs");
+fs.writeFileSync("operations.txt", operations.join("\n"));

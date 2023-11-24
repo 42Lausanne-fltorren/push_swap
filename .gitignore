@@ -1,0 +1,7 @@
+test.c
+build/
+a.out
+push_swap
+checker_linux
+libft.so
+tester.js
