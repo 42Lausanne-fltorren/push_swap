@@ -6,7 +6,7 @@
 /*   By: fltorren <fltorren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:43:30 by fltorren          #+#    #+#             */
-/*   Updated: 2023/11/24 11:41:06 by fltorren         ###   ########.fr       */
+/*   Updated: 2023/11/24 11:45:39 by fltorren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	main(void)
 	t_stack	moves_500;
 
 	moves_100.len = 1000;
-	moves_500.len = 0;
+	moves_500.len = 100;
 	moves_100.arr = (int *)malloc(sizeof(int) * moves_100.len);
 	moves_500.arr = (int *)malloc(sizeof(int) * moves_500.len);
 	test_n(moves_100, 100);
