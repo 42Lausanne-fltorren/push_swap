@@ -6,7 +6,7 @@
 /*   By: fltorren <fltorren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 00:52:15 by fltorren          #+#    #+#             */
-/*   Updated: 2023/11/22 18:03:32 by fltorren         ###   ########.fr       */
+/*   Updated: 2023/11/26 13:30:04 by fltorren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static int	ft_target(int n, t_stack stack)
 {
-	int	target;
-	int	i;
+	int		target;
+	size_t	i;
 
 	target = ft_min_stack(stack);
 	if (n > ft_min_stack(stack) && n < ft_max_stack(stack))

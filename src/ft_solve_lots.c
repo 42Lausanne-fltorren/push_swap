@@ -6,7 +6,7 @@
 /*   By: fltorren <fltorren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 00:58:51 by fltorren          #+#    #+#             */
-/*   Updated: 2023/11/22 18:04:46 by fltorren         ###   ########.fr       */
+/*   Updated: 2023/11/26 13:34:08 by fltorren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static int	ft_target(int n, t_stack stack)
 {
-	int	target;
-	int	i;
+	int		target;
+	size_t	i;
 
 	target = ft_max_stack(stack);
 	if (n > ft_min_stack(stack) && n < ft_max_stack(stack))
@@ -40,22 +40,22 @@ static t_moves	ft_min_moves(t_rot rot)
 			ft_max(2, rot.rot_a, rot.rot_b),
 			ft_max(2, rot.rev_rot_a, rot.rev_rot_b));
 	if (res == rot.rot_b + rot.rev_rot_a)
-		return ((t_moves){rot.rot_b, 0, 0, 0, rot.rev_rot_a, 0, rot.rot_b});
+		return ((t_moves){rot.rot_b, 0, 0, 0, rot.rev_rot_a, 0, 0});
 	else if (res == rot.rot_a + rot.rev_rot_b)
-		return ((t_moves){0, rot.rot_a, 0, rot.rev_rot_b, 0, 0});
+		return ((t_moves){0, rot.rot_a, 0, rot.rev_rot_b, 0, 0, 0});
 	else if (res == ft_max(2, rot.rot_b, rot.rot_a))
 	{
 		min = ft_min(2, rot.rot_b, rot.rot_a);
 		if (rot.rot_b < rot.rot_a)
-			return ((t_moves){0, rot.rot_a - min, min, 0, 0, 0});
+			return ((t_moves){0, rot.rot_a - min, min, 0, 0, 0, 0});
 		else
-			return ((t_moves){rot.rot_b - min, 0, min, 0, 0, 0});
+			return ((t_moves){rot.rot_b - min, 0, min, 0, 0, 0, 0});
 	}
 	min = ft_min(2, rot.rev_rot_b, rot.rev_rot_a);
 	if (rot.rev_rot_b < rot.rev_rot_a)
-		return ((t_moves){0, 0, 0, 0, rot.rev_rot_a - min, min});
+		return ((t_moves){0, 0, 0, 0, rot.rev_rot_a - min, min, 0});
 	else
-		return ((t_moves){0, 0, 0, rot.rev_rot_b - min, 0, min});
+		return ((t_moves){0, 0, 0, rot.rev_rot_b - min, 0, min, 0});
 }
 
 static t_moves	ft_count_moves(int n, t_stack a, t_stack b)
@@ -92,7 +92,7 @@ static int	ft_move_stacks(t_stack *a, t_stack *b, t_moves moves)
 
 int	solve_for_lots(t_stack *a, t_stack *b)
 {
-	int		i;
+	size_t	i;
 	int		count;
 	t_moves	min_moves;
 	t_moves	tmp;

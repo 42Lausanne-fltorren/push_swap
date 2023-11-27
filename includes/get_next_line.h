@@ -1,37 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fltorren <fltorren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/18 12:31:24 by fltorren          #+#    #+#             */
-/*   Updated: 2023/11/26 13:50:29 by fltorren         ###   ########.fr       */
+/*   Created: 2023/11/07 13:04:19 by fltorren          #+#    #+#             */
+/*   Updated: 2023/11/27 16:21:03 by fltorren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#ifndef GET_NEXT_LINE_H
+# include <stdlib.h>
+# include <stdio.h>
+# include <unistd.h>
+# include <fcntl.h>
+# include "libft.h"
+# define GET_NEXT_LINE_H
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1024
+# endif
 
-int	main(int argc, char **argv)
-{
-	int	*a;
-	int	*b;
-	int	i;
-
-	if (argc < 2)
-		return (0);
-	a = (int *)malloc(sizeof(int) * (argc - 1));
-	b = (int *)malloc(sizeof(int) * 0);
-	if (!a || !b)
-		return (0);
-	i = 0;
-	while (i < argc - 1)
-	{
-		if (ft_check_int(argv[i + 1]))
-			return (0);
-		a[i] = ft_atoi(argv[i + 1]);
-		i++;
-	}
-	solve(a, argc - 1, b, 0);
-	return (0);
-}
+char	*get_next_line(int fd);
+#endif

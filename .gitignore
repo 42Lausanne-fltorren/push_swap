@@ -5,3 +5,6 @@ push_swap
 checker_linux
 libft.so
 tester.js
+visualizer/dist/
+visualizer/node_modules/
+*.txt

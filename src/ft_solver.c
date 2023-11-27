@@ -6,7 +6,7 @@
 /*   By: fltorren <fltorren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 13:41:27 by fltorren          #+#    #+#             */
-/*   Updated: 2023/11/22 18:05:05 by fltorren         ###   ########.fr       */
+/*   Updated: 2023/11/26 13:51:03 by fltorren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	solve(int *a_arr, size_t a_len, int *b_arr, size_t b_len)
 	a.len = a_len;
 	b.arr = b_arr;
 	b.len = b_len;
+	if (ft_duplicates(&a))
+		return (-1);
 	count = 0;
 	if (a_len == 3)
 		count = solve_for_3(&a);

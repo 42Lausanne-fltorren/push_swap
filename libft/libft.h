@@ -6,7 +6,7 @@
 /*   By: fltorren <fltorren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 10:39:55 by fltorren          #+#    #+#             */
-/*   Updated: 2023/10/11 11:38:46 by fltorren         ###   ########.fr       */
+/*   Updated: 2023/11/27 16:19:41 by fltorren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char		*ft_strdup(const char *s);
 
 /* Additional */
 char		*ft_substr(char const *s, unsigned int start, size_t len);
-char		*ft_strjoin(char const *str1, char const *str2);
+char		*ft_strjoin(char *str1, char *str2);
 char		*ft_strtrim(char const *str, char const *set);
 char		**ft_split(char const *s, char c);
 char		*ft_itoa(int n);

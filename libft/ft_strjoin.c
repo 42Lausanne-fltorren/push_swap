@@ -6,24 +6,31 @@
 /*   By: fltorren <fltorren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 23:02:32 by fltorren          #+#    #+#             */
-/*   Updated: 2023/10/09 23:18:04 by fltorren         ###   ########.fr       */
+/*   Updated: 2023/11/27 16:17:54 by fltorren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *str1, char const *str2)
+char	*ft_strjoin(char *left_str, char *buff)
 {
-	size_t	len;
-	char	*join;
+	size_t	i;
+	size_t	j;
+	char	*str;
 
-	if (!str1 || !str2)
+	if (!left_str || !buff)
 		return (NULL);
-	len = ft_strlen(str1) + ft_strlen(str2) + 1;
-	join = (char *) ft_calloc(len, 1);
-	if (!join)
+	str = malloc(sizeof(char) * ((ft_strlen(left_str) + ft_strlen(buff)) + 1));
+	if (str == NULL)
 		return (NULL);
-	ft_strlcat(join, str1, len);
-	ft_strlcat(join, str2, len);
-	return (join);
+	i = -1;
+	j = 0;
+	if (left_str)
+		while (left_str[++i] != '\0')
+			str[i] = left_str[i];
+	while (buff[j] != '\0')
+		str[i++] = buff[j++];
+	str[ft_strlen(left_str) + ft_strlen(buff)] = '\0';
+	free(left_str);
+	return (str);
 }

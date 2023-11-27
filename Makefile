@@ -6,7 +6,11 @@ ARFLAGS 		=	rcs
 RM				=	rm -rf
 
 OUT_DIR			=	build
-SRCS			=	src/ft_push.c src/ft_reverse_rotate.c src/ft_rotate.c src/ft_solver.c src/ft_stack.c src/ft_utils.c src/push_swap.c src/ft_simple_solvers.c src/ft_solve_lots.c
+MAIN			=	src/push_swap.c
+BONUS_MAIN		=	src/checker_bonus.c
+TESTER_MAIN		=	src/tester.c
+SRCS			=	src/ft_push.c src/ft_reverse_rotate.c src/ft_rotate.c src/ft_solver.c src/ft_stack.c src/ft_utils.c src/ft_simple_solvers.c src/ft_solve_lots.c src/ft_error.c
+BONUS_SRCS		=	src/get_next_line.c
 OBJS			=	$(SRCS:%.c=$(OUT_DIR)/%.o)
 
 LIBFT_PATH		=	./libft
@@ -19,10 +23,11 @@ $(OBJS): $(OUT_DIR)/%.o: $(SRC_DIR)/%.c
 					@echo "Compiling $<"
 					$(CC) $(CFLAGS) -Iincludes -c $< -o $@
 
-bonus:				all
+bonus:
+					$(CC) $(CFLAGS) -Iincludes -Ilibft -Llibft -lft -D PRINT=0 $(BONUS_MAIN) $(SRCS) $(BONUS_SRCS) -o checker
 
 $(NAME):			$(LIBFT)
-					$(CC) $(CFLAGS) -Iincludes -Ilibft -Llibft -lft $(SRCS) -o $(NAME)
+					$(CC) $(CFLAGS) -Iincludes -Ilibft -Llibft -lft ${MAIN} $(SRCS) -o $(NAME)
 
 $(LIBFT):
 					make -C $(LIBFT_PATH) bonus
@@ -41,11 +46,12 @@ re:					fclean all
 linux:
 					make -C $(LIBFT_PATH) bonus so
 					cp $(LIBFT_PATH)/libft.so .
-					@gcc $(SRCS) -L libft -lft -Wl,-rpath=libft/ -o push_swap -g -I includes -I libft
+					@gcc $(SRCS) $(MAIN) -L libft -lft -Wl,-rpath=libft/ -o push_swap -g -I includes -I libft
+					@gcc $(SRCS) $(BONUS_MAIN) $(BONUS_SRCS) -D PRINT=0 -L libft -lft -Wl,-rpath=libft/ -o checker -g -I includes -I libft
 
 test:				${OUT_DIR}
 					@make -C $(LIBFT_PATH) bonus so
-					@gcc -D PRINT=0 src/ft_push.c src/ft_reverse_rotate.c src/ft_rotate.c src/ft_solver.c src/ft_stack.c src/ft_utils.c src/tester.c src/ft_simple_solvers.c src/ft_solve_lots.c -L libft -fPIC -lft -Wl,-rpath=libft/ -o build/tester -g -I includes -I libft
+					@gcc -D PRINT=0 $(SRCS) $(TESTER_MAIN) -L libft -fPIC -lft -Wl,-rpath=libft/ -o build/tester -g -I includes -I libft
 					@./build/tester
 
 retest:				fclean test
