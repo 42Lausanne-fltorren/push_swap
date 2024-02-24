@@ -6,11 +6,32 @@
 /*   By: fltorren <fltorren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 13:41:27 by fltorren          #+#    #+#             */
-/*   Updated: 2023/11/26 13:51:03 by fltorren         ###   ########.fr       */
+/*   Updated: 2024/02/24 11:50:35 by fltorren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+int	ft_free(int *a_arr, int *b_arr)
+{
+	free(a_arr);
+	free(b_arr);
+	return (-1);
+}
+
+static int	ft_issolved(t_stack a)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < a.len - 1)
+	{
+		if (a.arr[i] > a.arr[i + 1])
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 int	solve(int *a_arr, size_t a_len, int *b_arr, size_t b_len)
 {
@@ -23,13 +44,15 @@ int	solve(int *a_arr, size_t a_len, int *b_arr, size_t b_len)
 	b.arr = b_arr;
 	b.len = b_len;
 	if (ft_duplicates(&a))
-		return (-1);
+		return (ft_free(a.arr, b.arr));
 	count = 0;
+	if (ft_issolved(a))
+		return (ft_free(a.arr, b.arr));
 	if (a_len == 3)
 		count = solve_for_3(&a);
 	else if (a_len == 5)
 		count = solve_for_5(&a, &b);
-	else
+	else if (a_len > 5)
 		count = solve_for_lots(&a, &b);
 	free(a.arr);
 	free(b.arr);

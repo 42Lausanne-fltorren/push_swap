@@ -6,7 +6,7 @@
 /*   By: fltorren <fltorren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 13:35:14 by fltorren          #+#    #+#             */
-/*   Updated: 2023/11/27 15:56:32 by fltorren         ###   ########.fr       */
+/*   Updated: 2024/02/24 11:48:29 by fltorren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,14 @@ void	ft_error(void)
 	ft_putstr_fd("Error\n", 2);
 }
 
-void	ft_error_free(t_stack *a, t_stack *b)
+int	ft_error_free(t_stack *a, t_stack *b)
 {
 	ft_putstr_fd("Error\n", 2);
 	if (a && a->arr)
 		free(a->arr);
 	if (b && b->arr)
 		free(b->arr);
+	return (-1);
 }
 
 int	ft_duplicates(t_stack *a)
