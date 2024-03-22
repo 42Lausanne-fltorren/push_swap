@@ -6,7 +6,7 @@
 /*   By: fltorren <fltorren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 13:35:14 by fltorren          #+#    #+#             */
-/*   Updated: 2024/02/24 11:48:29 by fltorren         ###   ########.fr       */
+/*   Updated: 2024/03/22 12:45:51 by fltorren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ft_error_free(t_stack *a, t_stack *b)
 	return (-1);
 }
 
-int	ft_duplicates(t_stack *a)
+int	ft_duplicates(t_stack *a, t_stack *b)
 {
 	size_t	i;
 	size_t	j;
@@ -40,7 +40,7 @@ int	ft_duplicates(t_stack *a)
 		{
 			if (a->arr[i] == a->arr[j])
 			{
-				ft_error_free(a, NULL);
+				ft_error_free(a, b);
 				return (1);
 			}
 		}

@@ -303,12 +303,12 @@ function tester(n, tests)
 		A = [];
 		B = [];
 		operations = [];
-		while (A.length < n)
-		{
-			A.push(Math.floor(Math.random() * max * 2) - max);
-			// Remove duplicates
-			A = [...new Set(A)];
-		}
+			while (A.length < n)
+			{
+				A.push(Math.floor(Math.random() * max * 2) - max);
+				// Remove duplicates
+				A = [...new Set(A)];
+			}
 		if (n == 3)
 			solveFor3();
 		else if (n == 5)

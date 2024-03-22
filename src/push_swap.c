@@ -6,7 +6,7 @@
 /*   By: fltorren <fltorren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 12:31:24 by fltorren          #+#    #+#             */
-/*   Updated: 2024/02/24 12:49:54 by fltorren         ###   ########.fr       */
+/*   Updated: 2024/03/22 13:07:47 by fltorren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,24 @@ int	ft_arr_len(char **arr)
 	return (i);
 }
 
+char	**ft_get_tmp(int *argc, char **argv)
+{
+	char	**tmp;
+
+	if (ft_strchr(argv[1], ' '))
+	{
+		tmp = ft_split(argv[1], ' ');
+		if (!tmp)
+			return (NULL);
+		*argc = ft_arr_len(tmp) + 1;
+	}
+	else
+	{
+		tmp = argv + 1;
+	}
+	return (tmp);
+}
+
 int	main(int argc, char **argv)
 {
 	int		*a;
@@ -31,17 +49,9 @@ int	main(int argc, char **argv)
 
 	if (argc < 2)
 		return (0);
-	if (ft_strchr(argv[1], ' '))
-	{
-		tmp = ft_split(argv[1], ' ');
-		if (!tmp)
-			return (0);
-		argc = ft_arr_len(tmp) + 1;
-	}
-	else
-	{
-		tmp = argv + 1;
-	}
+	tmp = ft_get_tmp(&argc, argv);
+	if (!tmp)
+		return (0);
 	a = (int *)malloc(sizeof(int) * (argc - 1));
 	b = (int *)malloc(sizeof(int) * 0);
 	if (!a || !b)

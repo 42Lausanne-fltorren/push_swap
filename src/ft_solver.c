@@ -6,7 +6,7 @@
 /*   By: fltorren <fltorren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 13:41:27 by fltorren          #+#    #+#             */
-/*   Updated: 2024/02/24 11:50:35 by fltorren         ###   ########.fr       */
+/*   Updated: 2024/03/22 12:45:58 by fltorren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ int	solve(int *a_arr, size_t a_len, int *b_arr, size_t b_len)
 	a.len = a_len;
 	b.arr = b_arr;
 	b.len = b_len;
-	if (ft_duplicates(&a))
-		return (ft_free(a.arr, b.arr));
+	if (ft_duplicates(&a, &b))
+		return (-1);
 	count = 0;
 	if (ft_issolved(a))
 		return (ft_free(a.arr, b.arr));

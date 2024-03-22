@@ -6,7 +6,7 @@
 /*   By: fltorren <fltorren@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 12:29:28 by fltorren          #+#    #+#             */
-/*   Updated: 2024/02/24 11:51:02 by fltorren         ###   ########.fr       */
+/*   Updated: 2024/03/22 12:45:47 by fltorren         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int		ft_min(int count, ...);
 int		ft_max(int count, ...);
 
 int		ft_error_free(t_stack *a, t_stack *b);
-int		ft_duplicates(t_stack *a);
+int		ft_duplicates(t_stack *a, t_stack *b);
 int		ft_check_int(char *str);
 void	ft_error(void);
 int		ft_free(int *a, int *b);
